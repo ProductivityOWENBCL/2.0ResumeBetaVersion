@@ -1,0 +1,1485 @@
+、<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="copyright" content="© Wong Jin Wei. All rights reserved.">
+  <meta name="description" content="OWEN Digital CV — personal portfolio by Wong Jin Wei.">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OWENBCL</title>
+  <!-- Fonts: Inter (body), Manrope (headings) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <style>
+    /* =====================================
+       THEME TOKENS (from your original UI)
+       ===================================== */
+    :root{
+    /* Brand + tokens you already use in var() */
+    --container: 1100px;
+    --ink: #0f172a;
+    --brand: #2563eb;
+    --brand-strong: #1d4ed8;
+    --border: #e5e7eb;
+    --muted: #475569;
+    --shadow: 0 6px 18px rgba(2,6,23,.08);
+
+    /* Fonts */
+    --font-display: "EB Garamond", serif;
+    --font-ui-controls: "EB Garamond", serif; /* you wanted EB Garamond everywhere */
+
+    /* Type scale */
+    --fs-body: 18px;
+    --fs-h1: clamp(28px, 5.8vw, 56px);
+    --fs-h2: clamp(22px, 3.8vw, 32px);
+    --fs-h3: clamp(18px, 2.6vw, 22px);
+    }
+
+
+    *{ box-sizing:border-box }
+    html,body{ margin:0 }
+    body{ font-size: var(--fs-body); line-height:1.65; letter-spacing:0; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; -webkit-text-size-adjust:100%; color:var(--ink); background:#fff }
+    a{ color:var(--brand); text-decoration:none }
+    a:hover{ text-decoration:underline }
+
+    /* ================= NAVBAR (sticky, chip highlight, mobile) ================= */
+    .navbar{ position:sticky; top:0; z-index:20; background:transparent; box-shadow:none; border-bottom:none }
+    .navbar::before{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.10) 100%); pointer-events:none }
+    .nav-inner{ max-width:var(--container); margin:0 auto; display:flex; justify-content:center; align-items:center; gap:6px; padding:10px 16px; position:relative; z-index:1 }
+    /* Glass capsule behind the nav (matches your screenshot) */
+    .nav-shell{ display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:9999px; background:rgba(255,255,255,.28); -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%); border:1px solid rgba(255,255,255,.75); box-shadow: 0 12px 32px rgba(2,6,23,.12), 0 2px 10px rgba(2,6,23,.06), 0 0 0 6px rgba(255,255,255,.04); position:relative }
+    .nav-shell::before{ content:""; position:absolute; inset:0; border-radius:inherit; background:
+        linear-gradient(180deg, rgba(255,255,255,.58) 0%, rgba(255,255,255,.25) 100%),
+        radial-gradient(120px 40px at 18% 0%, rgba(255,255,255,.85), transparent 60%),
+        linear-gradient(90deg, rgba(88,156,252,.12), rgba(255,255,255,0) 50%, rgba(88,156,252,.10) 100%);
+      pointer-events:none; mix-blend-mode:overlay; }
+    .nav-shell::after{ content:""; position:absolute; inset:1px; border-radius:inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,.80), inset 0 -1px 0 rgba(0,0,0,.08), 0 0 0 1px rgba(255,255,255,.35); pointer-events:none; }
+    /* Logo uses an <img> now */
+    .logo{
+      width:36px; height:36px; border-radius:10px;
+      display:inline-block; overflow:hidden;
+      background:none !important; /* kill the blue gradient */
+      box-shadow:none;            /* optional: remove any effects */
+    }
+    .logo img{
+      width:100%; height:100%; object-fit:contain; display:block;
+      background:transparent;
+    }
+
+
+    .menu-icon{ margin-left:auto; display:none; flex-direction:column; cursor:pointer }
+    .menu-icon span{ width:26px; height:3px; background:#000; margin:4px 0; border-radius:3px }
+
+    .nav-links{ list-style:none; margin-left:0; display:flex; gap:8px; padding:0 }
+    .nav-links a{ font-family: var(--font-ui-controls);  position:relative; display:inline-flex; align-items:center; justify-content:center; color:#000; font-weight:600; font-size:14px; padding:7px 12px; border-radius:9999px; background:rgba(255,255,255,.30); border:1px solid rgba(255,255,255,.70); -webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,.72), inset 0 -1px 0 rgba(0,0,0,.08), 0 1px 2px rgba(2,6,23,.06); text-decoration:none; transition: background .2s ease, transform .12s ease, box-shadow .2s ease, color .2s ease }
+    .nav-links a::before{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(180deg, rgba(255,255,255,.60) 0%, rgba(255,255,255,.28) 100%), linear-gradient(90deg, rgba(88,156,252,.08), rgba(255,255,255,0) 60%); pointer-events:none; mix-blend-mode:overlay; opacity:.95 }
+    .nav-links a::before{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.30) 100%); pointer-events:none; mix-blend-mode:overlay; opacity:.9 }
+    .nav-links a:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(88,156,252,.35), inset 0 1px 0 rgba(255,255,255,.70), inset 0 -1px 0 rgba(0,0,0,.08) }
+    .nav-links a:active{ transform:translateY(1px) }
+    .nav-links a.active, .nav-links a[aria-current="page"]{ background:rgba(255,255,255,.58); color:var(--brand-strong); box-shadow:0 10px 26px rgba(2,6,23,.10), inset 0 1px 0 rgba(255,255,255,.78), inset 0 -1px 0 rgba(0,0,0,.08) }
+    .nav-links a:hover{ background:rgba(255,255,255,.42); color:var(--brand-strong); text-decoration:none; box-shadow:0 12px 28px rgba(2,6,23,.10) }
+    @media (max-width:840px){ .nav-links a{ width:calc(100% - 24px); margin:4px 12px; } }
+
+    @media (max-width:840px){
+      .menu-icon{ display:flex }
+      .nav-links{ position:absolute; left:0; right:0; top:62px; background:#f8f8f8; display:none; flex-direction:column; gap:0; padding:8px 0; border-bottom:1px solid var(--border) }
+      .nav-links.active{ display:flex }
+      .nav-links li{ text-align:center }
+    }
+
+    /* =============== PAGE SECTIONS (placeholder for now) =============== */
+    main{ position:relative; z-index:1 }
+    section{ display:none; padding:48px 16px }
+    section.active{ display:block }
+    .container{ max-width:var(--container); margin:0 auto }
+    .card{ background:#fff; border:1px solid var(--border); border-radius:24px; box-shadow:var(--shadow); padding:24px }
+    h1,h2,h3{ font-family: var(--font-display); font-weight:700; letter-spacing:0; line-height:1.2 }
+    h1{ margin:0 0 8px; font-size: var(--fs-h1) }
+    h2{ font-size: var(--fs-h2) }
+    h3{ font-size: var(--fs-h3) }
+    h1{ margin:0 0 8px }
+    p.muted{ color:var(--muted); margin:0 }
+
+    /* (Optional) subtle page background like your vibe */
+    .bg-dots{ position:fixed; inset:0; pointer-events:none; background:
+      radial-gradient(circle 2px, rgba(201,201,201,.32) 98%, transparent 100%) 0 0/24px 24px; opacity:.6 }
+  
+    /* =============== ABOUT ME styles (from your original, + glass) =============== */
+    .glass-card{ position:relative; padding:28px; border-radius:28px; background:rgba(255,255,255,.42); border:1px solid rgba(255,255,255,.65); box-shadow: 0 12px 28px rgba(2,6,23,.10), 0 0 0 6px rgba(255,255,255,.05); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); overflow:hidden; max-width:920px; margin-inline:auto }
+    .glass-card::before{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(to bottom, #fcfceb 0%, #fdfdf5 55%, hsl(124,100%,97%) 100%); opacity:.55; pointer-events:none; z-index:0 }
+    .glass-card::after{ content:""; position:absolute; inset:1px; border-radius:inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,.70), inset 0 -1px 0 rgba(0,0,0,.08); pointer-events:none; z-index:0 }
+    .glass-card > *{ position:relative; z-index:1 }
+
+    .section-about .body2{ display:flex; justify-content:center; align-items:center; min-height:70vh; color:#000 }
+    .container9{ text-align:center; max-width:680px; margin:0 auto; padding:30px; border-radius:30px; }
+    .container92{ text-align:center; max-width:800px; padding:12px; background:rgba(0,0,0,.04); border-radius:28px; border:1px solid #cccccc31; margin-inline:auto; margin-top: 0px }
+    .emoji9{ font-size:48px; padding-top:5% }
+    .intro9{ background:#fff; padding:30px; border-radius:20px; display:inline-block }
+    .intro9 img{ width:200px; height:200px; object-fit:cover; border-radius:50%; margin-bottom:10px; animation:float-img 2.5s ease-in-out infinite; border:4px solid #ff740234; background:linear-gradient(135deg,#dbeafe,#bfdbfe) }
+    @keyframes float-img{0%{transform:translateY(0)}50%{transform:translateY(-.70rem)}100%{transform:translateY(0)}}
+    .introcomment{ padding:2% 3.5% 1.5% }
+    .Second-pic-line{ display:flex; justify-content:center; align-items:center }
+    .Second-pic{ width:200px; height:200px; object-fit:cover; border-radius:10%; margin:50px 0 30px; box-shadow:0 8px 20px rgba(0,0,0,.2); background:linear-gradient(135deg,#dbeafe,#bfdbfe) }
+    .resume-box{ display:flex; justify-content:center; align-items:center; border:4px solid #b6b6b621; background:#f7f7f711; border-radius:30px; margin:24px auto; max-width:700px }
+    .resume-container{ text-align:center; padding:3% 3% 6% }
+    .download-button{ display:inline-flex; align-items:center; gap:8px; padding:10px 18px; font-size:16px; font-weight:700; color:#0f172a; background:rgba(255,255,255,.72); border:1px solid rgba(255,255,255,.85); border-radius:9999px; -webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%); box-shadow: 0 8px 20px rgba(2,6,23,.10), inset 0 1px 0 rgba(255,255,255,.85); text-decoration:none; cursor:pointer }
+    .download-button:hover{ background:rgba(255,255,255,.85); text-decoration:none }
+    .download-button:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(88,156,252,.35), 0 8px 20px rgba(2,6,23,.10), inset 0 1px 0 rgba(255,255,255,.90) }
+    .download-button::after{ content:"↗"; font-size:.85em; opacity:.85 }
+    .download-button,.download-button:hover{ text-decoration:none }
+
+    /* Badges for Degree & Role (first card) */
+    .about-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px }
+    .badge{ display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border-radius:9999px; background:rgba(255,255,255,.72); border:1px solid rgba(0,0,0,.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 1px 2px rgba(2,6,23,.06) }
+    .badge .dot{ width:8px; height:8px; border-radius:50%; background:#16a34a; box-shadow:0 0 0 2px rgba(22,163,74,.25) }
+    .badge.status{ background:rgba(22,163,74,.10); border-color:rgba(22,163,74,.25) }
+
+    /* Footer glass+layers */
+    footer.footer{ background:transparent; border:0; box-shadow:none; padding:28px 16px }
+    .footer-inner{ max-width:var(--container); margin:18px auto; border-radius:28px; background:rgba(255,255,255,.42); -webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%); border:1px solid rgba(255,255,255,.75); box-shadow: 0 -12px 28px rgba(2,6,23,.10), 0 2px 10px rgba(2,6,23,.06), 0 0 0 6px rgba(255,255,255,.04); position:relative; overflow:hidden; padding:24px; display:grid; grid-template-columns:2fr 1fr 1fr; gap:18px }
+    .footer-inner::before{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.28)); pointer-events:none }
+    .footer-inner::after{ content:""; position:absolute; inset:1px; border-radius:inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,.80), inset 0 -1px 0 rgba(0,0,0,.08); pointer-events:none }
+    
+    /* removed duplicate footer-inner override to keep fixed width */
+    .footer-col h3,.footer-col h4{ margin:0 0 8px }
+    .footer-links{ list-style:none; margin:0; padding:0 }
+    .footer-links li{ margin:6px 0 }
+    @media (max-width:900px){ .footer-inner{ grid-template-columns:1fr; } }
+
+    /* About — detail grid inside first card */
+    .about-detail-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:18px }
+    .detail-item{ background:rgba(255,255,255,.78); border:1px solid rgba(0,0,0,.06); border-radius:14px; padding:12px 14px; box-shadow:0 4px 12px rgba(2,6,23,.06) }
+    .detail-item b{ display:block; margin-bottom:4px }
+    @media (max-width:780px){ .about-detail-grid{ grid-template-columns:1fr } }
+
+  
+    /* ===== Splash Hero (WELCOME TO MY ↔ OWEN DIGITAL CV) ===== */
+    .splash{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:9999; background:rgba(255,255,255,.82); -webkit-backdrop-filter: blur(8px) saturate(140%); backdrop-filter: blur(8px) saturate(140%); transition:opacity .6s ease }
+    .slideshow{ position:relative; width:min(820px,92vw); height:180px; display:grid; place-items:center }
+    .slide-text{ position:absolute; inset:0; display:grid; place-items:center; font-family:var(--font-display); font-weight:700; letter-spacing:.01em; font-size:clamp(32px,7vw,64px); color:var(--ink); opacity:0; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease }
+    .slide-text.active{ opacity:1; transform:translateY(0) }
+  
+    /* About — extra section layout */
+    .about-subgrid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px }
+    .about-block h2{ margin:0 0 8px; font-size: var(--fs-h2) }
+    .about-list{ list-style:none; margin:0; padding:0 }
+    .about-list li{ margin:8px 0 }
+    @media (max-width:860px){ .about-subgrid{ grid-template-columns:1fr } }
+  
+    /* ===== Chips (Skills) ===== */
+    .skills-grid{ list-style:none; margin:6px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:10px }
+    .chip{ padding:8px 12px; border-radius:9999px; background:rgba(255,255,255,.65); border:1px solid rgba(0,0,0,.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 1px 2px rgba(2,6,23,.06) }
+    .chip b{ font-weight:700 }
+
+    /* ===== Accordion (Tools / External Knowledge) ===== */
+    .accordion details{ margin:10px 0; border:1px solid rgba(0,0,0,.06); border-radius:14px; background:rgba(255,255,255,.6); box-shadow:0 4px 12px rgba(2,6,23,.06); overflow:hidden }
+    .accordion summary{ cursor:pointer; list-style:none; padding:12px 14px; font-weight:700; position:relative }
+    .accordion summary::marker{ display:none }
+    .accordion summary::-webkit-details-marker{ display:none }
+    .accordion summary:after{ content:"▾"; position:absolute; right:14px; top:12px; transition:.2s transform ease }
+    .accordion details[open] > summary:after{ transform:rotate(180deg) }
+    .accordion .accordion-content{ padding:6px 16px 14px 22px }
+    .accordion .accordion-content ul{ margin:6px 0 0 0; padding-left:1.1em }
+
+    
+    .container9 h1{ margin-bottom: 20px }
+  
+    /* ===== INTRODUCE (hero + typing + services + ctas) ===== */
+    .introduce-glass{ position:relative; padding:28px; border-radius:28px; background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.75); box-shadow: 0 12px 28px rgba(2,6,23,.08), 0 0 0 6px rgba(255,255,255,.05); -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%); overflow:hidden; max-width:980px; margin-inline:auto }
+    .introduce-glass::before{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(180deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.7) 60%, rgba(255,255,255,.6) 100%); opacity:.18; pointer-events:none }
+    .introduce-hero{ text-align:center }
+    .intro-typed{ display:inline-block; font-size: var(--fs-h1); font-weight:800; letter-spacing:.005em; color:#0f172a; text-shadow:0 1px 0 rgba(255,255,255,.35) }
+    .intro-sub{ color:#0f172a; opacity:.9; margin-top:6px; font-size:clamp(16px,2.4vw,20px) }
+    .caret{ display:inline-block; width:.6ch; opacity:.7; animation:blink 1.2s steps(1,end) infinite }
+    @keyframes blink{50%{opacity:0}}
+
+    .services{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:18px 0 }
+    .service-card{ padding:16px; border-radius:18px; background:rgba(255,255,255,.92); border:1px solid rgba(0,0,0,.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 2px 10px rgba(2,6,23,.06) }
+    .service-card h3{ margin:0 0 6px; font-size: var(--fs-h3) }
+    .service-card p{ margin:0 }
+    @media (max-width:900px){ .services{ grid-template-columns:1fr } }
+
+    .cta-row{ display:flex; gap:12px; justify-content:center; margin-top:12px; flex-wrap:wrap }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:9999px; background:rgba(255,255,255,.72); border:1px solid rgba(255,255,255,.85); box-shadow: 0 8px 20px rgba(2,6,23,.10), inset 0 1px 0 rgba(255,255,255,.85); text-decoration:none; cursor:pointer }
+    .btn:hover{ background:rgba(255,255,255,.85); text-decoration:none }
+
+    /* ===== PROJECTS (multi-type: docs, YT, Drive, Docs/Slides) ===== */
+    .portfolio-glass{
+    position:relative; padding:28px; border-radius:28px;
+    background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.75);
+    box-shadow:0 12px 28px rgba(2,6,23,.08), 0 0 0 6px rgba(255,255,255,.05);
+    -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%);
+    overflow:hidden; max-width:1100px; margin-inline:auto;
+    }
+    .portfolio-glass::before{
+    content:""; position:absolute; inset:0; border-radius:inherit;
+    background:linear-gradient(180deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.7) 60%, rgba(255,255,255,.6) 100%);
+    opacity:.18; pointer-events:none;
+    }
+
+    .project-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:14px }
+    @media (max-width:1000px){ .project-grid{ grid-template-columns:repeat(2,minmax(0,1fr)) } }
+    @media (max-width:640px){ .project-grid{ grid-template-columns:1fr } }
+
+    .project-card{
+    cursor:pointer; padding:16px; border-radius:18px;
+    background:rgba(255,255,255,.92); border:1px solid rgba(0,0,0,.06);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 2px 10px rgba(2,6,23,.06);
+    transition:transform .12s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .project-card:hover{ transform:translateY(-1px); background:rgba(255,255,255,.98); box-shadow:0 12px 26px rgba(2,6,23,.12) }
+    .project-card h3{ margin:0 0 6px; font-size: var(--fs-h3) }
+    .project-card p{ margin:0; color:var(--muted) }
+
+    /* Modal (shared viewer) */
+    .doc-modal[hidden]{ display:none }
+    .doc-modal{
+    position:fixed; inset:0; z-index:60; background:rgba(15,23,42,.55);
+    -webkit-backdrop-filter: blur(6px) saturate(140%); backdrop-filter: blur(6px) saturate(140%);
+    display:grid; place-items:center; padding:18px;
+    }
+    .doc-panel{
+    width:min(980px,94vw); max-height:min(88vh,94vh); display:flex; flex-direction:column; overflow:hidden;
+    border-radius:28px; background:rgba(255,255,255,.86); border:1px solid rgba(255,255,255,.75);
+    box-shadow:0 18px 48px rgba(2,6,23,.18), 0 0 0 6px rgba(255,255,255,.05);
+    }
+    .doc-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px; border-bottom:1px solid rgba(0,0,0,.06);
+    background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.80));
+    }
+    .doc-title{ margin:0; font-size:clamp(18px,2.6vw,22px); font-weight:800 }
+    .doc-close{
+    border:1px solid rgba(0,0,0,.08); background:rgba(255,255,255,.92);
+    border-radius:9999px; padding:8px 12px; cursor:pointer; font-weight:700;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 2px 10px rgba(2,6,23,.06);
+    }
+    .doc-content{ padding:0; overflow:auto; background:rgba(255,255,255,.6) }
+    .doc-content iframe{ width:100%; height:calc(88vh - 64px); border:0; display:block }
+    @media (max-height:600px){ .doc-content iframe{ height:60vh } }
+
+  
+    /* ===== VIDEO PROJECT (glass gallery) ===== */
+    .projects-glass{ position:relative; padding:28px; border-radius:28px; background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.75); box-shadow: 0 12px 28px rgba(2,6,23,.08), 0 0 0 6px rgba(255,255,255,.05); -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%); overflow:hidden; max-width:1100px; margin-inline:auto }
+    .projects-glass::before{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(180deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.7) 60%, rgba(255,255,255,.6) 100%); opacity:.18; pointer-events:none }
+    .video-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:14px }
+    .video-card{ padding:14px; border-radius:18px; background:rgba(255,255,255,.92); border:1px solid rgba(0,0,0,.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 2px 10px rgba(2,6,23,.06) }
+    .video-card h3{ margin:10px 0 6px; font-size: var(--fs-h3) }
+    .video-card p{ margin:0; color:var(--muted) }
+    .video-embed{ width:100%; aspect-ratio:16/9; background:#000; border-radius:14px; overflow:hidden }
+    .video-embed iframe{ width:100%; height:100%; border:0; display:block }
+    @media (max-width:900px){ .video-grid{ grid-template-columns:1fr } }
+  
+    /* Per‑video actions */
+    .video-actions{ display:flex; gap:10px; margin-top:10px; flex-wrap:wrap }
+    .btn-mini{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:9999px; background:rgba(255,255,255,.72); border:1px solid rgba(255,255,255,.85); box-shadow:0 6px 16px rgba(2,6,23,.08), inset 0 1px 0 rgba(255,255,255,.85); text-decoration:none; cursor:pointer }
+    .btn-mini:hover{ background:rgba(255,255,255,.85); text-decoration:none }
+  
+    /* ===== EXPERIENCE (timeline glass) ===== */
+    .experience-glass{ position:relative; padding:28px; border-radius:28px; background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.75); box-shadow: 0 12px 28px rgba(2,6,23,.08), 0 0 0 6px rgba(255,255,255,.05); -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%); overflow:hidden; max-width:1100px; margin-inline:auto }
+    .experience-glass::before{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(180deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.7) 60%, rgba(255,255,255,.6) 100%); opacity:.18; pointer-events:none }
+    .timeline{ position:relative; margin-top:12px; padding-left:22px; --tl-x: 8px; --tl-pad: 22px }
+    .timeline::before{ content:""; position:absolute; top:0; bottom:0; left:var(--tl-x); width:2px; background:linear-gradient(to bottom, rgba(88,156,252,.28), rgba(2,6,23,.06) 40%, rgba(2,6,23,.02)) }
+    .timeline-item{ position:relative; padding:14px 0 8px 0 }
+    .timeline-item .dot{ position:absolute; left:calc(var(--tl-x) - 7px - var(--tl-pad)); top:18px; width:14px; height:14px; border-radius:50%; background:radial-gradient(circle at 50% 50%, #eaf3ff 0%, #cfe2ff 40%, #589CFC 65%, #0a3ccf 100%); border:0; box-shadow: 0 0 0 2px rgba(88,156,252,.35), 0 0 12px rgba(88,156,252,.55), 0 0 24px rgba(88,156,252,.30) }
+    .timeline-item .date{ display:inline-block; padding:6px 10px; border-radius:9999px; background:rgba(255,255,255,.92); border:1px solid rgba(0,0,0,.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 2px 10px rgba(2,6,23,.06); margin-left:18px; font-weight:700 }
+    .timeline-item p{ margin:8px 0 0 18px }
+    /* Experience: highlight + date style */
+    mark{ background: linear-gradient(90deg, rgba(255,229,77,.98) 6%, rgba(255,243,154,.94) 50%, rgba(255,249,205,.88) 100%); color:#000; padding:0 .28em; border-radius:6px; box-shadow: 0 .18em 0 rgba(255,240,140,.75) inset, 0 1px 1px rgba(0,0,0,.03) }
+    .timeline{ position:relative; margin-top:12px; --tl-x:18px; --tl-pad:36px; padding-left:var(--tl-pad) }
+    .timeline::before{ content:""; position:absolute; top:0; bottom:0; left:var(--tl-x); width:2px; background:linear-gradient(to bottom, rgba(88,156,252,.45), rgba(2,6,23,.10) 50%, rgba(2,6,23,.05)) }
+    .timeline-item .dot{ position:absolute; left:calc(var(--tl-x) - 7px - var(--tl-pad)); top:18px; width:14px; height:14px; border-radius:50%; background:radial-gradient(circle at 50% 50%, #eaf3ff 0%, #cfe2ff 40%, #589CFC 65%, #0a3ccf 100%); border:0; box-shadow: 0 0 0 2px rgba(88,156,252,.35), 0 0 12px rgba(88,156,252,.55), 0 0 24px rgba(88,156,252,.30) }
+    .timeline-item .date{ display:block; margin-left:18px; font-weight:800; font-size:clamp(20px,3.2vw,28px); background:linear-gradient(90deg,#f97316,#fbbf24); -webkit-background-clip:text; background-clip:text; color:transparent }
+    /* Experience: switch to default sans font (Apple system stack) */
+    :root{ --font-default: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Arial, system-ui, sans-serif; }
+    #experience{ font-family: var(--font-default); }
+    #experience h1, #experience h2, #experience h3, #experience .timeline-item .date{ font-family: var(--font-default) !important; font-weight:800; letter-spacing:0 }
+  
+    /* ===== Introduce: "And last but not least!" content box ===== */
+    .intro-last{ margin-top:18px; text-align:center }
+    .intro-essay{ max-width:820px; margin:0 auto 12px; text-align:center }
+    /* Highlighter style: hard→soft yellow gradient (only in this box) */
+    
+    .author-photo{ width:min(680px,92vw); border-radius:24px; display:block; margin:22px auto 8px; box-shadow:0 14px 40px rgba(2,6,23,.15) }
+    .author-name{ margin:14px 0 4px; font-weight:800; font-size:clamp(28px,5.5vw,40px); background:linear-gradient(180deg,#60a5fa,#93c5fd); -webkit-background-clip:text; background-clip:text; color:transparent }
+    .author-sub{ margin:0 0 6px; font-weight:700; color:#111 }
+  
+    /* ===== VERSIONS (changelog) ===== */
+    #versions{ font-family: var(--font-default); }
+    .versions-hero h1{ text-align:center; font-weight:800; font-size: var(--fs-h1); margin:0 0 22px; letter-spacing:0 }
+    .versions-glass{ position:relative; padding:28px; border-radius:28px; background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.75); box-shadow: 0 12px 28px rgba(2,6,23,.08), 0 0 0 6px rgba(255,255,255,.05); -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%); overflow:hidden; max-width:1100px; margin-inline:auto }
+    .versions-glass::before{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(180deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.7) 60%, rgba(255,255,255,.6) 100%); opacity:.18; pointer-events:none }
+    .updates-box{ background:rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.06); border-radius:24px; padding:18px 20px; margin-bottom:22px }
+    .updates-list{ list-style:none; margin:0; padding:0 }
+    .updates-list li{ margin:14px 0; font-weight:600 }
+    .updates-list .date{ text-decoration:underline; font-weight:800; color:#111 }
+    .versions-body p{ margin:16px 0; color:#0f172a }
+
+    /* ========== Learning Section (special) ========== */
+    .about-learning { overflow:hidden }
+    .learn-header {
+      display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .segmented { position:relative; display:inline-grid; grid-auto-flow:column; gap:6px;
+      padding:6px; border-radius:9999px; background:rgba(255,255,255,.65);
+      border:1px solid rgba(0,0,0,.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.85);
+    }
+    .seg-btn {
+      position:relative; z-index:1; padding:8px 14px; border:0; border-radius:9999px;
+      background:transparent; font-weight:800; cursor:pointer; font-family: var(--font-display);
+    }
+    .seg-glider {
+      position:absolute; inset:6px auto 6px 6px; width:calc(50% - 6px); border-radius:9999px;
+      background:rgba(255,255,255,.92); border:1px solid rgba(0,0,0,.06);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 6px 16px rgba(2,6,23,.12);
+      transition: transform .22s ease;
+    }
+    .seg-btn.active { color: var(--brand-strong) }
+
+    .learn-panel { display:none; animation: fadeUp .25s ease both }
+    .learn-panel.active { display:block }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+
+    .focus-hero { padding:12px; border-radius:20px; background:linear-gradient(180deg, rgba(37,99,235,.10), rgba(255,255,255,.0)); border:1px solid rgba(37,99,235,.18) }
+    .focus-mark {
+      display:inline-block; padding:6px 10px; border-radius:9999px; font-weight:800;
+      background:rgba(37,99,235,.12); border:1px solid rgba(37,99,235,.28);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .focus-title { margin:.4rem 0 .1rem; font-size: clamp(20px, 2.6vw, 26px) }
+    .focus-sub { margin:0 0 .6rem }
+
+    .focus-tags { list-style:none; margin:8px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px }
+
+    .progress-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:12px }
+    @media (max-width:900px){ .progress-grid { grid-template-columns:repeat(2,minmax(0,1fr)) } }
+    @media (max-width:520px){ .progress-grid { grid-template-columns:1fr } }
+
+    .prog { background:rgba(255,255,255,.78); border:1px solid rgba(0,0,0,.06); border-radius:14px; padding:10px 12px;
+      box-shadow:0 4px 12px rgba(2,6,23,.06) }
+    .prog-top { display:flex; align-items:center; justify-content:space-between; font-weight:700 }
+    .bar { position:relative; height:10px; border-radius:9999px; background:rgba(0,0,0,.06); overflow:hidden; margin-top:8px }
+    .bar span { position:absolute; left:0; top:0; bottom:0; width:var(--p); background:linear-gradient(90deg,#93c5fd,#2563eb);
+      box-shadow:0 1px 6px rgba(37,99,235,.35) inset; border-radius:inherit; transform-origin:left; animation: grow .8s ease both }
+    .bar.compact { height:8px }
+    @keyframes grow { from { transform:scaleX(.2) } to { transform:scaleX(1) } }
+
+    .ticker { margin-top:12px; border-radius:14px; border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.72); overflow:hidden; position:relative }
+    .ticker-track { display:flex; gap:24px; list-style:none; margin:0; padding:10px 14px; animation: autoScroll 18s linear infinite }
+    .ticker-track li { white-space:nowrap; opacity:.9 }
+    @keyframes autoScroll { from { transform:translateX(0) } to { transform:translateX(-50%) } }
+
+    .side-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px }
+    @media (max-width:900px){ .side-grid { grid-template-columns:1fr 1fr } }
+    @media (max-width:520px){ .side-grid { grid-template-columns:1fr } }
+    .side-card { padding:14px; border-radius:16px; background:rgba(255,255,255,.92); border:1px solid rgba(0,0,0,.06);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 2px 10px rgba(2,6,23,.06) }
+    .side-card h4 { margin:.2rem 0 .2rem; font-size: var(--fs-h3) }
+    .mini-list { margin:.4rem 0 0; padding-left:1.1rem }
+
+    /* ---- Project card with image + hover ---- */
+    .project-thumb{
+      width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden;
+      background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+      border:1px solid rgba(0,0,0,.06); box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+      margin-bottom:8px; position:relative;
+    }
+    .project-thumb img{
+      width:100%; height:100%; object-fit:cover; display:block; transition: transform .35s ease;
+    }
+    .project-card:hover .project-thumb img{ transform:scale(1.03) }
+    .project-meta{ display:flex; align-items:center; gap:8px; margin-top:8px; color:var(--muted) }
+    .project-link{ margin-left:auto; font-weight:800; text-decoration:none }
+    .project-card:focus-within, .project-card:focus{
+      outline:2px solid rgba(37,99,235,.35); outline-offset:2px;
+    }
+
+    /* ===== PROJECT DOC VIEW (full page) ===== */
+    #project-view .doc-wrap{
+      max-width: 900px; margin: 0 auto; position: relative;
+    }
+    .back-btn{
+      position: sticky; top: 12px; left: 0;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 9999px; cursor: pointer;
+      border:1px solid rgba(0,0,0,.08); background:rgba(255,255,255,.92);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 10px rgba(2,6,23,.06);
+      font-weight: 700; text-decoration: none; color: inherit;
+    }
+    .project-doc{
+      margin-top: 12px; padding: 24px; border-radius: 24px;
+      background: rgba(255,255,255,.92); border:1px solid rgba(0,0,0,.06);
+      box-shadow: 0 8px 20px rgba(2,6,23,.08), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .project-doc h1{ font-size: clamp(28px, 4.6vw, 42px); margin: 0 0 10px }
+    .project-doc h2{ font-size: clamp(22px, 3.4vw, 30px); margin: 22px 0 8px }
+    .project-doc h3{ font-size: clamp(18px, 2.8vw, 24px); margin: 18px 0 6px }
+    .project-doc h4{ font-size: clamp(16px, 2.4vw, 20px); margin: 14px 0 6px }
+    .project-doc p{ margin: 10px 0 }
+    .project-doc img{ width: 100%; height: auto; border-radius: 12px; display: block; margin: 10px 0 }
+    .project-doc a{ text-decoration: underline }
+    .project-doc blockquote{
+      margin: 12px 0; padding: 12px 16px; border-left: 4px solid var(--brand);
+      background: rgba(37,99,235,.06); border-radius: 10px;
+    }
+    .project-doc mark{ background: linear-gradient(90deg,#fff3b0,#ffe08a) }
+    .project-doc u{ text-underline-offset: 3px }
+    .project-doc i{ opacity: .95 }
+    .project-doc .hr{ height:1px; background: rgba(0,0,0,.08); margin: 16px 0; }
+    .project-doc .meta{ color: var(--muted); font-size: .95rem }
+    .project-doc .hero{
+      width:100%; aspect-ratio: 16/9; border-radius: 16px; overflow:hidden;
+      border:1px solid rgba(0,0,0,.06); background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+      margin: 8px 0 14px;
+    }
+    .project-doc .hero img{ width:100%; height:100%; object-fit:cover }
+    .project-doc iframe{ width:100%; aspect-ratio:16/9; border:0; border-radius:14px }
+
+  </style>
+</head>
+<body>
+  <div class="bg-dots" aria-hidden="true"></div>
+
+  <!-- Splash Hero -->
+  <!-- <div id="splash" class="splash" aria-live="polite">
+    <div class="slideshow" role="status" aria-label="Intro slideshow">
+      <div class="slide-text active">WELCOME TO MY</div>
+      <div class="slide-text">OWEN DIGITAL CV</div>
+    </div>
+  </div> -->
+
+  <!-- NAV -->
+  <nav class="navbar" role="navigation" aria-label="Primary">
+    <div class="nav-inner">
+      <div class="nav-shell">
+      <a href="#about" class="logo" aria-label="Home">
+        <img src="../MYRESUME2.0/picture/OWEN_Sign.PNG" alt="OWENBCL logo" loading="lazy" />
+      </a>
+      <div class="menu-icon" id="menuToggle" aria-label="Toggle menu" role="button" tabindex="0"><span></span><span></span><span></span></div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" data-route="about">ABOUT ME</a></li>
+        <li><a href="#introduce" data-route="introduce">INTRODUCE</a></li>
+        <li><a href="#project" data-route="project">PROJECTS</a></li>
+        <li><a href="#vidprojects" data-route="vidprojects">VIDEO PROJECT</a></li>
+        <li><a href="#experience" data-route="experience">EXPERIENCE</a></li>
+        <li><a href="#versions" data-route="versions">VERSIONS</a></li>
+        <li><a href="#policy" data-route="policy">PRIVACY POLICY</a></li>
+      </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGES (placeholders only for Step 1; we will replace content in later steps) -->
+  <main>
+    <section id="about" class="active" data-page="about">
+      <div class="container">
+        <div class="glass-card about-glass">
+          <div class="body2">
+            <div class="container9">
+              <div class="emoji9">👨‍💻</div>
+              <h1>About Wong Jin Wei</h1>
+              <div class="container92">
+                <div class="intro9">
+                  <img class="card__img" src="./picture/OWENSELFIE_IN_HONG_KONG.jpg" alt="OWEN" onerror="this.removeAttribute('src');this.style.background='linear-gradient(135deg,#dbeafe,#bfdbfe)';"/>
+                  <p>Hello there<span class="wave9">👋</span></p>
+                  <p>You can call me <b>OWEN</b>. I'm a <b>Bachelor Degree in Cybersecurity</b> from <a href="https://new.apu.edu.my" target="_blank" rel="noopener noreferrer"><b>Asia Pacific University</b></a>.</p>
+                </div>
+              </div>
+
+              <div class="introcomment">
+                <div class="Second-pic-line">
+                  <img class="Second-pic" src="./picture/OWEN_SELFIE.jpg" alt="OWEN selfie" onerror="this.removeAttribute('src');this.style.background='linear-gradient(135deg,#dbeafe,#bfdbfe)';"/>
+                </div>
+
+                <p><mark>FOCUS:</mark> Cybersecurity Under-Graduate Bachelor Student | Blue Team & Threat Hunting | Network Security - incident Response Vulnerability Assessment | Looking for Security Internship</p>
+                <p>Learning on University is not enough, always needed a daily habit of new target practicing to improve myself. I don't limit myself, and keep learn something challenges.</p>
+                <p>My current interest lies in Cybersecurity, and I am eager to gain experience by collaborating with real industry team to strengthen systems, take on new challenges, and learn from others.</p>
+              </div>
+ 
+              <div class="resume-box">
+                <div class="resume-container">
+                  <a class="download-button" id="resume-link" href="./picture/WONG JIN WEI APU CYB DEGREE RESUME.pdf" target="_blank" rel="noopener">Download Resume (PDF)</a>
+                </div>
+              </div>
+
+              <!-- Meta (Degree, Role, Status) -->
+              <div class="about-badges">
+                <span class="badge"><b>DEGREE:</b> BSc (Hons) Cyber Security @ <a href="https://new.apu.edu.my" target="_blank" rel="noopener">APU</a></span>
+                <span class="badge"><b>DIPLOMA:</b> Software Engineer @ <a href="https://new.apu.edu.my" target="_blank" rel="noopener">APU</a></span>
+                <span class="badge status"><span class="dot" aria-hidden="true"></span><b>STATUS:</b> OPEN FOR INTERNSHIP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    <!-- About Me — Skills -->
+    <div class="container" style="margin-top:18px">
+      <div class="glass-card about-skills">
+        <h2>Skills & Knowledge</h2>
+        <ul class="skills-grid">
+          <li class="chip">Research Method for C&T <b>(Very Capable)</b></li>
+          <li class="chip">Workplace Professional Skills <b>(Very Capable)</b></li>
+          <li class="chip">Professional Communication <b>(Very Capable)</b></li>
+          <li class="chip">Innovation Process <b>(Very Capable)</b></li>
+          <li class="chip">System Development Methods & HCI <b>(Very Capable)</b></li>
+          <li class="chip">OODJ & Java Programming</li>
+          <li class="chip">System & Network Administration + N & Networking</li>
+          <li class="chip">Programming for Data Analysis</li>
+          <li class="chip">Switching & Routing Essentials</li>
+          <li class="chip">Philisiphy & Current Issues</li>
+          <li class="chip">Computer System L-Level Techniques</li>
+          <li class="chip">Implementation of Secure System</li>
+          <li class="chip">Data Structure</li>
+          <li class="chip">Event Management</li>
+          <li class="chip">Video Grapher & Video Editor (in Cinematic)</li>
+          <li class="chip">Machine Learning</li>
+          <li class="chip">MORE? ASK ME!</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- About Me — New & Learning Knowledge (SPECIAL) -->
+<div class="container" style="margin-top:18px">
+  <section class="glass-card about-learning" aria-labelledby="learnTitle">
+    <header class="learn-header">
+      <h2 id="learnTitle">New &amp; Learning Knowledge</h2>
+
+      <!-- pill switcher -->
+      <div class="segmented" role="tablist" aria-label="Learning view">
+        <button class="seg-btn active" role="tab" aria-selected="true" aria-controls="learnMain" id="tabMain">Main Focus</button>
+        <button class="seg-btn" role="tab" aria-selected="false" aria-controls="learnSide" id="tabSide">Side Learning</button>
+        <span class="seg-glider" aria-hidden="true"></span>
+      </div>
+    </header>
+
+    <!-- MAIN FOCUS -->
+    <div id="learnMain" class="learn-panel active" role="tabpanel" aria-labelledby="tabMain">
+      <div class="focus-hero">
+        <div class="focus-mark">Now</div>
+        <h3 class="focus-title">AI Security Trainer — Red↔Blue Lab</h3>
+        <p class="focus-sub">Designing a practice system that simulates <b>attack</b> &amp; <b>defense</b> flows across Windows / Kali with evidence capture.</p>
+
+        <ul class="focus-tags">
+          <li class="chip"><b>C#</b> (Win)</li>
+          <li class="chip"><b>Python</b> (log/ETL)</li>
+          <li class="chip">Kali + Windows</li>
+          <li class="chip">MITRE ATT&amp;CK</li>
+          <li class="chip">Docs + Evidence</li>
+        </ul>
+      </div>
+
+      <!-- progress bars -->
+      <div class="progress-grid">
+        <div class="prog">
+          <div class="prog-top"><b>Design Spec</b><span class="prog-val" data-val="76">76%</span></div>
+          <div class="bar"><span style="--p:76%"></span></div>
+        </div>
+        <div class="prog">
+          <div class="prog-top"><b>Red-Team Labs</b><span class="prog-val" data-val="48">48%</span></div>
+          <div class="bar"><span style="--p:48%"></span></div>
+        </div>
+        <div class="prog">
+          <div class="prog-top"><b>Blue Detection</b><span class="prog-val" data-val="34">34%</span></div>
+          <div class="bar"><span style="--p:34%"></span></div>
+        </div>
+        <div class="prog">
+          <div class="prog-top"><b>Report &amp; UI</b><span class="prog-val" data-val="20">20%</span></div>
+          <div class="bar"><span style="--p:20%"></span></div>
+        </div>
+      </div>
+
+      <!-- activity ticker -->
+      <div class="ticker" aria-label="Recent activity">
+        <ul class="ticker-track">
+          <li>✅ Wrote core lab topology (Host-Only 192.168.210.0/24)</li>
+          <li>🔍 Tested nmap discovery + ping sweep capture</li>
+          <li>🛡️ Drafted Windows log sources (EVTX → JSON)</li>
+          <li>📑 Outlined MITRE technique mapping</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SIDE LEARNING -->
+    <div id="learnSide" class="learn-panel" role="tabpanel" aria-labelledby="tabSide" hidden>
+      <div class="side-grid">
+        <article class="side-card">
+          <h4>MongoDB + Node</h4>
+          <p>Personal data store for portfolio tools, JSON schema, backup/restore.</p>
+          <div class="bar compact"><span style="--p:42%"></span></div>
+          <ul class="mini-list">
+            <li>CRUD + indexes</li>
+            <li>Backup with mongodump</li>
+            <li>Auth & roles basics</li>
+          </ul>
+        </article>
+        <article class="side-card">
+          <h4>React + Tailwind</h4>
+          <p>Componentize this site; keep liquid-glass via utilities.</p>
+          <div class="bar compact"><span style="--p:35%"></span></div>
+          <ul class="mini-list">
+            <li>Layout primitives</li>
+            <li>Modal & router</li>
+            <li>A11y states</li>
+          </ul>
+        </article>
+        <article class="side-card">
+          <h4>VRChat UdonSharp</h4>
+          <p>Spawner/NPC audio tiers, editor tooling, perf tuning.</p>
+          <div class="bar compact"><span style="--p:58%"></span></div>
+          <ul class="mini-list">
+            <li>Audio routing</li>
+            <li>Editor windows</li>
+            <li>Pool patterns</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+    <!-- About Me — Tools & Code Languages (expandable) -->
+    <div class="container" style="margin-top:18px">
+      <div class="glass-card about-tools">
+        <h2>Tools &amp; Code Languages</h2>
+        <div class="accordion">
+
+          <details>
+            <summary class="accordion-summary">C# <b>(Most Capable)</b></summary>
+            <div class="accordion-content">
+              <ul>
+                <li>Object Oriented Programming (OOP)</li>
+                <li>Windows Forms & WPF for desktop apps</li>
+                <li>.NET libraries for file & system management</li>
+                <li>Basic multithreading & async/await</li>
+                <li>Unity 3D Game Development Functions, Data Analysis (basic), Unity scripting with physics, animations, and UI</li>
+                <li>Currently Still Creating a Cleaner Software</li>
+                <li>Currently Using C# For Creating Security Software System For Learning Purposes in Windows 11 (Securing) & Kali Linux (Hacking)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary class="accordion-summary">HTML, CSS, JS, PHP, SQL <b>(Most Capable)</b></summary>
+            <div class="accordion-content">
+              <ul>
+                <li>Responsive web design & cross-browser compatibility</li>
+                <li>REST API integration & AJAX</li>
+                <li>Basic database design & CRUD operations (MySQL)</li>
+                <li>Form validation & security considerations (e.g., XSS, SQL Injection prevention)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary class="accordion-summary">JAVA</summary>
+            <div class="accordion-content">
+              <ul>
+                <li>Object Oriented Programming (OOP)</li>
+                <li>GUI development with JavaFX/Swing</li>
+                <li>Multi-threading & exception handling</li>
+                <li>Basic networking (sockets, client-server)</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary class="accordion-summary">DaVinci Resolve &amp; Canon G7X</summary>
+            <div class="accordion-content">
+              <ul>
+                <li>Editing wedding &amp; event videos; color and audio basics</li>
+                <li>Filming with compact camera rigs</li>
+                <li>Multi-cam editing workflows</li>
+                <li>Color grading with LUTs</li>
+                <li>Audio syncing & noise reduction</li>
+                <li>Storyboarding & pre-production planning</li>
+              </ul>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- About Me — External Knowledge (expandable) -->
+    <div class="container" style="margin-top:18px">
+      <div class="glass-card about-knowledge">
+        <h2>External Knowledge</h2>
+        <div class="accordion">
+          <details>
+            <summary class="accordion-summary">Video Editing Skills</summary>
+            <div class="accordion-content">
+              <ul>
+                <li>DaVinci Resolve workflow; story pacing; titles and transitions</li>
+                <li>Publishing to YouTube; embedding and sharing</li>
+              </ul>
+            </div>
+          </details>
+          <details>
+            <summary class="accordion-summary">Event Coordinator</summary>
+            <div class="accordion-content">
+              <ul>
+                <li>INTER EXCEL graduation ceremony support</li>
+                <li>Slides, video, and music handoff with sound tech</li>
+              </ul>
+            </div>
+          </details>
+          <details>
+            <summary class="accordion-summary">Film‑Maker</summary>
+            <div class="accordion-content">
+              <ul>
+                <li>Filming with Canon G7X; basic cinematography</li>
+              </ul>
+            </div>
+          </details>
+          <details>
+            <summary class="accordion-summary">Research &amp; Business Basics</summary>
+            <div class="accordion-content">
+              <ul>
+                <li>Research methods; documentation and presentation</li>
+                <li>Managing Business; Fundamentals of E‑Business Applications</li>
+                <li>General IT skills</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Me — Contact & Status (last box) -->
+    <div class="container" style="margin-top:18px">
+      <div class="glass-card about-contact">
+        <h2>Contact</h2>
+        <div class="about-detail-grid">
+          <div class="detail-item">
+            <b>Email</b>
+            <a href="mailto:productivityowen@gmail.com">productivityowen@gmail.com</a>
+          </div>
+          <div class="detail-item">
+            <b>Phone</b>
+            <a href="tel:+601153359516" id="owen-phone">+60 11 5335 9516</a></div>
+          <div class="detail-item">
+            <b>Location</b>
+            Kuala Lumpur, Malaysia, Sri Petaling</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    
+    <section id="introduce" data-page="introduce">
+      <div class="container">
+        <div class="introduce-glass">
+          <div class="introduce-hero">
+            <h1 class="intro-typed"><span id="introTyped">Hello There</span><span class="caret">❗</span></h1>
+            <p class="intro-sub">I turn ideas into clean, elegant interfaces, reliable, and etc. — Quote: Noting is impossible.</p>
+            <p>I had creating many project until now, there are nothing is perfect, but to keep improving. I am enjoying every moment rather than just blinding my eye. I created this website, is to make every project that I have created before become visualable, rather than using the old fasion way of just a resume (Of-course it is still important) that can't prove anything.</p>
+          </div>
+
+          <div class="services">
+            <div class="service-card">
+              <h3>UI Web Development</h3>
+              <p>Single‑page UIs, liquid‑glass aesthetics, responsive layouts, micro‑interactions and here it is the website your viewing right now.</p>
+            </div>
+            <div class="service-card">
+              <h3>Video Editing</h3>
+              <p>DaVinci Resolve edits for weddings & events; titles, pacing, light grading and etc. You can watch my project on just one click of navigation.</p>
+            </div>
+            <div class="service-card">
+              <h3>Event Visuals</h3>
+              <p>Slides & media handoff; ceremony screens; simple filming with Canon G7X.</p>
+            </div>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn" href="./picture/WONG JIN WEI APU CYB DEGREE RESUME.pdf" target="_blank" rel="noopener">Download Resume (PDF)</a>
+            <a class="btn" href="mailto:productivityowen@gmail.com">Email Me</a>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="introduce-glass intro-last">
+          <h2>And last but not least!</h2>
+          <div class="intro-essay">
+            <p>🎓 In my life, <mark>continuing to learn new knowledge, learn from mistake in experience and delving deeper into any knowledge has become one of my most important habits</mark>. I easily adapt to and embrace new environments, and I enjoy learning about new technologies, designs, and things. I also <mark>love learning with people who have a lot of life experience and hope to learn and collaborate with them</mark>. Additionally, I enjoy reading Books, especially my favorite one, <a href="https://aliabdaal.com/feel-good-productivity/" target="_blank" rel="noopener">"Feel Good Productivity"</a> by <b>Ali Abdaal</b>.</p>
+            <p>It is TRUELY interesting and meaningful. It has helped me find my true purpose and direction in life, showing me how to START and enrich my GOALS.</p>
+          </div>
+          <img class="author-photo" src="./picture/ali-abdaal-youtuber-author-podcaster-productivity-expert-feel-good-productivity-book.jpg" alt="Ali Abdaal holding the Feel Good Productivity book" onerror="this.removeAttribute('src');this.style.background='linear-gradient(135deg,#dbeafe,#bfdbfe)';this.style.height='320px'"/>
+          <h2 class="author-name">Ali Abdaal</h2>
+          <p class="author-sub">The Author of <b>Feel Good Productivity</b> book.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="project" data-page="project">
+      <div class="container">
+        <div class="portfolio-glass">
+          <h1>Projects</h1>
+          <p class="intro-sub">Click a card to open the full documentation page. You can see my project and of-course the documentation.</p>
+
+          <div class="project-grid">
+
+            <!-- Example 1: Local document template -->
+            <article class="project-card"
+              tabindex="0"
+              data-title="Windows 11 Cleaner — Speed Up Your PC"
+              data-template="tmpl-ai-security">
+              <div class="project-thumb">
+                <img src="./picture/CleanerP1.png" alt="AI Security Trainer cover" onerror="this.style.display='none'">
+              </div>
+              <h3>Windows 11 Cleaner System 1.0</h3>
+              <p>A light software to helps you speed up your windows 11. It turns off every...</p>
+              <div class="project-meta">
+                <span>Local Doc</span><a class="project-link" href="#project-view">Open ↗</a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+              <section id="project-view" data-page="project-view">
+                <div class="container">
+                  <div class="portfolio-glass">
+                    <div class="doc-wrap">
+                      <a class="back-btn" id="projBack" href="#project">← Back</a>
+                      <br><br>
+                      <article class="project-doc" id="projDoc">
+                        <!-- JS will inject either a local template or an embed -->
+                      </article>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- ===== Project Local Templates ===== -->
+              <template id="tmpl-ai-security">
+                <header class="meta"><b>Last updated:</b> <time>2025-08-26</time> • Status: Draft</header>
+                <header class="meta"><b>Owener:</b> Wong Jin Wei (OWEN)</header>
+                <header class="meta"><b>Platform:</b> Windows 10/11 Recommended</header>
+                <header class="meta"><b>UI:</b> WinForms (A fixed layout with no resource monitors)</header>
+                <p>Download link: </p>
+
+                <div class="hero"><img src="./picture/CleanerP1.png" alt=""></div>
+                <br>
+                
+                <h1>Windows 11 Cleaner</h1>
+                <p><mark>Goal:</mark> Build for the <b>speed up</b> & <b>clear</b> or even helps to <b>Terminate</b>all the software at once.</p>
+
+                <div class="hr"></div>
+
+                <h1>1.0 Introduction</h1>
+                <p>CLEAR_SYSTEM 2.0 which is a Windows which purpose of focusing on <b><mark>one-tap environment cleanup</mark></b> for STUDY, GAMING, or
+                WORK. It closes open windowed apps gracefully (with fallback force-kill), which loops cleanup to ensure stubborn process exit,
+                 restarts the Windows shell, optionally triggers a GPU driver reset, clear common temporary caches (Temp/Prefetch), flushes 
+                 DNS, and can trim working sets (RAM) to reclaim memory. On the other hand, it also provide a respectful control for the user
+                 a White List and Black List. All of these actions are executed from a <b><mark>single RUN button</mark></b> to keep the UX have a fast
+                 and distraction-free.
+                </p>
+
+                <h1>2.0 Problem & Motivation</h1>
+                <li><b>Context switching pain:</b> Many windowed apps accumulate over time; <b><mark>closing them manually is very slow and inconsistent.</mark></b></li>
+                <li><b>UI/GPU degradation:</b> Explorer/GPU stacks can get "sticky" after long sessions; restarting them often restores responsiveness.</li>
+                <li><b>Transient clutter:</b> <mark><b>%TEMP%</b></mark>, <mark><b>C:\Windows\Temp</b></mark>, and Prefetch files grow and sometimes cause sluggishness or odd behavior.</li>
+
+
+
+
+
+
+
+                
+
+                
+                <!-- <iframe src="https://www.youtube.com/embed/XjcteYU5lrE" title="Demo video" loading="lazy" allowfullscreen></iframe> -->
+
+                
+              </template>
+
+              
+
+
+    <section id="vidprojects" data-page="vidprojects">
+      <div class="container">
+        <div class="projects-glass">
+          <h1>Video Project</h1>
+          <p class="intro-sub">A few pieces I shot &amp; edited — if an embed doesn’t load, try the YouTube link below.</p>
+          <div class="video-grid">
+
+            <article class="video-card">
+              <div class="video-embed">
+                <iframe src="https://drive.google.com/file/d/13w_sOFtI-mbx8y1LeMeBzOyqawH6ptUm/preview" allow="autoplay; fullscreen" loading="lazy" allowfullscreen title="Wedding Highlight"></iframe>
+              </div>
+              <h3>Wedding Video 2</h3>
+              <p>Filmed &amp; edited by me — DaVinci Resolve, Canon G7X.</p>
+            </article>
+
+            <article class="video-card">
+              <div class="video-embed">
+                <iframe src="https://drive.google.com/file/d/1bQ9fMU3joUZuvSBWXuX8WxMEMjbsui6P/preview" allow="autoplay; fullscreen" loading="lazy" allowfullscreen title="Wedding Highlight"></iframe>
+              </div>
+              <h3>Wedding Video</h3>
+              <p>Filmed &amp; edited by me — DaVinci Resolve, IPhone 12.</p>
+            </article>
+
+            <article class="video-card">
+              <div class="video-embed">
+                <iframe src="https://youtu.be/zIg3naSgmHk?si=Yu48Zr8VF47QrSS4" title="OWENBCL YouTube Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+              </div>
+              <h3>MY YOUTUBE CHANNEL</h3>
+              <p>This button below 👇 is to direct to my youtube channel.</p>
+              <div class="video-actions">
+                <a class="btn-mini" href="https://www.youtube.com/@owenaowen8148" target="_blank" rel="noopener">Open on YouTube</a>
+              </div>
+            </article>
+
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" data-page="experience">
+      <div class="container">
+        <div class="experience-glass">
+          <h1>Here are my Working Experience and Project Experience.</h1>
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2025 - Creating Personal Digital CV & RESUME 2.0</span>
+              <p><b>From: 2025 - Current</b><br>
+                I had created a whole new Website which following with a new UI design and also a new resume format. This is because I want to make it more simple, clean and easy to read. <mark>I want to make it more professional</mark> rather than just a normal resume that everyone is using. So, I created this new version of my resume and also a new website to showcase my skills and experience. And get inspired by the Apple liquid glass design. And thanks to ChatGPT 5, it makes my work easier and possible fast, and it teaches me how to create it. And here is my previous Diploma level <a href="https://productivityowenbcl.github.io/OWENBCL/OWENWEBSITE/HTML_UI/ABOUT_ME.html">Website 1.0 (Click Me.)</a>.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2024 - Event Organizer + Web & Software Developer</span>
+              <p><b>From: 2024 Aug - Oct</b><br>
+                In <a href="https://www.icemglobal.com/">ICEM GLOBAL</a> companies, I have had 2 different experience learned on <mark>how to start a project and managing</mark>. I helped them create a whole new <a href="https://www.icemglobal.com/">Website</a> and also start a "Form Creator System" start from scratch (but of-course the project is not finished yet due to that I have continue my education on APU).
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2024 - Creating Personal Digital CV</span>
+              <p><b>From: 2024 June - Current</b><br>
+                In 2024, I <mark>created my Personal Digital CV Website</mark>, which inspired by the YouTuber <a href="https://aliabdaal.com/about/" target="_blank" rel="noopener">Ali Abdaal</a>. He is one of the best productivity gurus globally, and his work motivated me to utilize my skills and create my own <a href="#about"><b>OWEN Digital CV</b></a>.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2024 - Volunteer to help INTER EXCEL Company.</span>
+              <p><b>From: 2024 May 17 and May 19</b><br>
+                I have been helping with the <a href="https://www.interexcel.edu.my" target="_blank" rel="noopener"><b>INTER EXCEL</b></a> company to <mark>organize the graduation event ceremony</mark>. I was responsible to share the content <b>slide screen show</b>, <b>video</b> and <b>music</b> with <b>Sound Technician</b>.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2024 - Assignment Project</span>
+              <p><b>On 2024 Jan to April</b><br>
+                I created the <a href="../WDT_Webdesign/HTML/UserHomeExperPsy.html" target="_blank" rel="noopener"><b>ExperPsy</b></a> in our Web Development Technology subject. It is <mark>a platform to reach with the professional psychologist</mark>.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2023 — Working Part‑time</span>
+              <p><b>From: 2023 March – May</b><br>
+                Worked with the <a href="https://brickhouse.my/venues/pokok-lalaport/" target="_blank" rel="noopener"><b>Brick House</b></a> Group, serving customers and providing excellent service in a fun, high‑energy environment.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2022 — Part‑Time Production Assistant</span>
+              <p><b>On 2022</b><br>
+                Assisted a film‑making team: carrying gear, setting lights, organizing tools for smooth shoots. Also offered useful creative suggestions to the director.
+                <br><a href="https://youtu.be/0DbgGCLh4xU?si=NBUf97KgXnqhXMGC&t=356" target="_blank" rel="noopener"><b>👉 VIDEO LINK</b></a>
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2022 — Advertisement Video &amp; Film Making</span>
+              <p><b>On 2022</b><br>
+                Helped <b>Mitsubishi Miri JL Nippon Auto</b> make a short Facebook advertisement video — a fun and insightful project.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2021 — Advertisement Video &amp; Film Making</span>
+              <p><b>On 2021</b><br>
+                Supported <a href="https://ctacademic.com.my" target="_blank" rel="noopener"><b>CT Academic Service Company</b></a> on an advertisement video and took part as an actor.
+              </p>
+            </div>
+
+            <div class="timeline-item">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="date">2007 → 2022 — Help Selling Food</span>
+              <p><b>On between 2007 and 2022</b><br>
+                Helped my grandparents sell steamed buns and fried dough sticks, assisted customers with orders, and provided feedback to improve food quality.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="versions" data-page="versions">
+      <div class="container">
+        <div class="versions-hero">
+          <h1>My Personal Digital Website Update</h1>
+        </div>
+        <div class="versions-glass">
+          <div class="updates-box">
+            <ul class="updates-list">
+              <li><span class="date">2025 August 26</span> - A whole new UI has developed.</li>
+              <li><span class="date">2024 July 28</span> - Updating Experience Page.</li>
+              <li><span class="date">2024 July 26</span> - Add a dot mouse hover effect background.</li>
+              <li><span class="date">2024 July 7</span> - Updating the new UI (ABOUT ME, Navigation Bar) and Add new "Versions Page" also remove the INTRODUCE page.</li>
+              <li><span class="date">2024 June</span> - Developed this Personal Digital Resume Website.</li>
+            </ul>
+          </div>
+
+          <div class="versions-body">
+            <p>I am completely <mark>using 50% HTML and CSS</mark> and thanks to the <b>ChatGPT</b> for helping me to design this Digital CV. While there are many smart and fast ways to create a webpage and design, I chose the traditional approach. The reason is that I want to <mark>show you the effort</mark> and dedication I put into building something I love to learn and create. I understand that PDF resumes are also considered old-fashioned, so I created my own Digital Webpage to give you a glimpse of the future of resumes, making it easier for you to view and understand my skills and experiences. And of course! I will update a new design of UI/UX and to approach the other smart Tools and Softwares.</p>
+
+            <p>I want to showcase my skills through my Digital CV. I will continuously update it because I consider myself the product. I aim to demonstrate and prove my abilities to others, highlighting my knowledge and skills.</p>
+
+            <p>Creating this Digital CV not only allows me to present my knowledge and experience but also provides a better and easier way for future hiring managers or anyone responsible for hiring to understand my qualifications. <mark>This Digital CV is not just for fun; it represents me as the product, showcasing my knowledge, thinking, building, and learning abilities.</mark></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="policy" data-page="policy">
+  <div class="container">
+    <div class="glass-card">
+      <h1>Privacy Policy & Terms of Use</h1>
+      <p><b>Effective date:</b> 2025-08-26</p>
+      <p>This website is the personal digital resume and portfolio of <b>Wong Jin Wei (“OWEN”)</b>. It is intended solely to showcase my work and experience. By viewing or using this site, you agree to this Privacy Policy and the Terms of Use below.</p>
+
+      <h2>Privacy Policy</h2>
+      <p>I aim to collect as little personal information about visitors as possible. This site does not use account logins or contact forms.</p>
+
+      <h3>What information I collect</h3>
+      <ul>
+        <li><b>Emails you send me:</b> If you click the email link, your message is sent via your own email provider to my inbox. I will keep your email only as long as needed to respond or as required by law.</li>
+        <li><b>Embedded media:</b> Some pages embed content from <b>YouTube</b> and <b>Google Drive</b>. Those services may set cookies or collect usage data when you view or play the embeds, according to their own policies. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google/YouTube Privacy Policy</a>.</li>
+        <li><b>Basic technical logs:</b> Standard, non-personal server or platform logs may record your IP address and user-agent temporarily for security and delivery of the site.</li>
+      </ul>
+
+      <h3>Cookies & analytics</h3>
+      <p>This site does not intentionally set cookies or run analytics. However, <b>third-party embeds</b> (YouTube/Google Drive) may place cookies or use similar technologies. You can control cookies via your browser settings.</p>
+
+      <h3>How I use your information</h3>
+      <ul>
+        <li>To reply to messages you send me.</li>
+        <li>To operate, protect, and improve the site’s availability and security.</li>
+      </ul>
+
+      <h3>Data sharing</h3>
+      <p>I do not sell your personal information. I may disclose information if required by law or to protect my rights and safety.</p>
+
+      <h3>Security</h3>
+      <p>I use reasonable measures to protect communications and content on this site. No method of transmission or storage is 100% secure.</p>
+
+      <h3>Your choices</h3>
+      <ul>
+        <li>You can choose not to load embedded videos (e.g., with content blockers) to avoid third-party tracking.</li>
+        <li>You may request deletion of emails you previously sent by contacting me at <a href="mailto:productivityowen@gmail.com">productivityowen@gmail.com</a>.</li>
+      </ul>
+
+      <h3>Changes</h3>
+      <p>I may update this Policy from time to time. Material changes will be reflected by updating the “Effective date” above.</p>
+
+      <h2>Terms of Use & Copyright</h2>
+      <p>All original content on this site—including text, design, layout, source code, images, and videos unless otherwise credited—are <b>copyright © Wong Jin Wei. All rights reserved.</b></p>
+
+      <h3>License for viewing</h3>
+      <ul>
+        <li>You are granted a limited, non-exclusive, non-transferable license to <b>view</b> this website and to share a link to it for personal, non-commercial purposes.</li>
+      </ul>
+
+      <h3>Prohibited uses</h3>
+      <ul>
+        <li><b>No copying, reproduction, redistribution, modification, or mirroring</b> of any part of the site or its source code without my prior written permission.</li>
+        <li><b>No scraping or automated harvesting</b> (including for dataset creation or model training) of the site’s content, design, or code.</li>
+        <li><b>No commercial use</b> of any content, including images and videos, without a separate, express license from me.</li>
+        <li>Do not remove or alter copyright, trademark, or attribution notices.</li>
+      </ul>
+
+      <h3>Attributions & third-party rights</h3>
+      <p>Logos, product names, or trademarks referenced on the site are the property of their respective owners. Embedded media is governed by the terms of the respective platforms.</p>
+
+      <h3>Reporting infringement (Takedown)</h3>
+      <p>If you believe material on this site infringes your rights, send a notice to <a href="mailto:productivityowen@gmail.com">productivityowen@gmail.com</a> including: (1) your contact information, (2) a description and exact URL of the material, (3) a statement of good-faith belief that the use is unauthorized, and (4) a statement made under penalty of perjury that the notice is accurate and that you are authorized to act.</p>
+
+      <h3>Disclaimers</h3>
+      <p>This site is provided “as is” for informational purposes about my work. I make no warranties (express or implied). To the maximum extent permitted by law, I am not liable for any damages arising from your use of this site.</p>
+
+      <h3>Governing law</h3>
+      <p>These terms are governed by the laws of Malaysia. Disputes will be resolved in the courts of Kuala Lumpur, Malaysia, unless otherwise required by applicable law.</p>
+
+      <h3>Contact</h3>
+      <p>For privacy questions, permissions, or takedown requests, email: <a href="mailto:productivityowen@gmail.com">productivityowen@gmail.com</a>.</p>
+
+      <p style="font-size:14px;color:#475569;margin-top:10px">Note: This text is a general template and does not constitute legal advice. For specific legal needs, consult a lawyer.</p>
+    </div>
+  </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h3>OWENBCL</h3>
+        <p>Personal Digital CV — crafted with EB Garamond &amp; a liquid‑glass UI.</p>
+        <p>&copy; Wong Jin Wei 2025 • All rights reserved.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#introduce">Introduce</a></li>
+          <li><a href="#projects">Video Project</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#versions">Versions</a></li>
+          <li><a href="#policy">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Social</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:productivityowen@gmail.com">Email</a></li>
+          <li><a href="https://www.linkedin.com/in/wong-jin-wei-1604a327b" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://x.com/ProductiviOWEN" target="_blank" rel="noopener">X</a></li>
+          <li><a href="https://www.youtube.com/@owenaowen8148" target="_blank" rel="noopener">YouTube</a></li>
+          <li><a href="https://www.instagram.com/owen_aowen" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Universal Project Viewer Modal -->
+<div id="docModal" class="doc-modal" hidden aria-modal="true" role="dialog" aria-labelledby="docTitle">
+  <article class="doc-panel">
+    <header class="doc-header">
+      <h3 id="docTitle" class="doc-title">Project</h3>
+      <button id="docClose" class="doc-close" type="button" aria-label="Close">✕</button>
+    </header>
+    <div class="doc-content" id="docContent"></div>
+  </article>
+</div>
+
+
+
+  <script>
+    // ===== Router =====
+    (function(){
+      const sections=[...document.querySelectorAll('main > section')];
+      const links=[...document.querySelectorAll('.nav-links a')];
+
+      function showSection(id){
+        const targetId = id || 'about';
+        const target = document.getElementById(targetId) || document.getElementById('about');
+        sections.forEach(s=>s.classList.remove('active'));
+        target.classList.add('active');
+        links.forEach(a=>{
+          const active = a.dataset.route===targetId;
+          a.classList.toggle('active', active);
+          a.setAttribute('aria-current', active ? 'page' : 'false');
+        });
+        if(targetId==='introduce'){ initIntroduceTyping(); }
+        window.scrollTo({top:0,left:0,behavior:'auto'});
+      }
+
+      function onHash(){ showSection((location.hash||'#about').slice(1)); }
+      window.addEventListener('hashchange', onHash);
+      document.addEventListener('DOMContentLoaded', onHash);
+
+      // make clicks consistent
+      document.addEventListener('click', (e)=>{
+        const link = e.target.closest('.nav-links a[data-route]');
+        if(!link) return;
+        e.preventDefault();
+        const route = link.dataset.route;
+        if(location.hash !== '#' + route) location.hash = route; else showSection(route);
+      });
+    })();
+
+    // ===== Mobile menu =====
+    (function(){
+      const toggle=document.getElementById('menuToggle');
+      const links=document.getElementById('navLinks');
+      function flip(){ links.classList.toggle('active'); }
+      toggle.addEventListener('click',flip);
+      toggle.addEventListener('keydown',e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); flip(); }});
+      links.addEventListener('click',e=>{ if(e.target.matches('a[data-route]')) links.classList.remove('active'); });
+    })();
+    // ===== Splash slideshow control (show once) =====
+    (function(){
+      const splash=document.getElementById('splash');
+      if(!splash) return;
+      const slides=[...splash.querySelectorAll('.slide-text')];
+      let i=0, swaps=0; const maxSwaps=1; const dwell=1200; // one swap, then hold briefly
+      function show(n){ slides.forEach((el,k)=>el.classList.toggle('active', k===n)); }
+      function step(){
+        i=(i+1)%slides.length; show(i); swaps++;
+        if(swaps<maxSwaps){ setTimeout(step, 900); }
+        else { setTimeout(()=>{ splash.style.opacity='0'; setTimeout(()=>splash.remove(), 700); }, dwell); }
+      }
+      show(0);
+      setTimeout(step, 900);
+    })();
+    // ===== Introduce typing (runs once) =====
+    let __introOnce = false;
+    function initIntroduceTyping(){
+      if(__introOnce) return; __introOnce=true;
+      const el=document.getElementById('introTyped'); if(!el) return;
+      const texts=["Hello There","你好","Apa khabar","Welcome 欢迎 Selamat Datang"]; let i=0;
+      function next(){ el.textContent=texts[i]; i=(i+1)%texts.length; setTimeout(next, 1600); }
+      next();
+    }
+  </script>
+  <script>
+  // ===== Projects modal viewer (multi-source embed) =====
+  (function(){
+    const modal = document.getElementById('docModal');
+    if(!modal) return;
+    const titleEl = document.getElementById('docTitle');
+    const content = document.getElementById('docContent');
+    const btnClose = document.getElementById('docClose');
+
+    function toEmbedURL(raw){
+      if(!raw) return null;
+
+      try{
+        const u = new URL(raw);
+
+        // --- YouTube: watch?v= -> /embed/
+        if(u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')){
+          let id = '';
+          if(u.hostname.includes('youtu.be')) id = u.pathname.slice(1);
+          else id = u.searchParams.get('v') || '';
+          return id ? `https://www.youtube.com/embed/${id}` : raw;
+        }
+
+        // --- Google Drive file: /file/d/<id>/... -> /file/d/<id>/preview
+        if(u.hostname.includes('drive.google.com')){
+          const m = u.pathname.match(/\\/file\\/d\\/([^/]+)\\//);
+          const id = m?.[1];
+          return id ? `https://drive.google.com/file/d/${id}/preview` : raw;
+        }
+
+        // --- Google Docs: add embed-friendly params
+        if(u.hostname.includes('docs.google.com') && u.pathname.includes('/document/')){
+          return raw.includes('embedded=true') ? raw : raw.replace('/edit', '/edit') + (raw.includes('?') ? '&' : '?') + 'embedded=true';
+        }
+
+        // --- Google Slides: convert edit to embed
+        if(u.hostname.includes('docs.google.com') && u.pathname.includes('/presentation/')){
+          // Prefer published embed if available; otherwise /embed
+          const id = u.pathname.split('/d/')[1]?.split('/')[0];
+          if(id) return `https://docs.google.com/presentation/d/${id}/embed?start=false&loop=false&delayms=3000`;
+          return raw;
+        }
+      }catch(e){ /* non-URL string */ }
+
+      // Local docs (e.g. docs/something.html) or any other URL
+      return raw;
+    }
+
+    function openModal(title, url){
+      titleEl.textContent = title || 'Project';
+      content.innerHTML = '';
+      const frame = document.createElement('iframe');
+      frame.loading = 'lazy';
+      frame.title = title || 'Project document';
+      frame.referrerPolicy = 'no-referrer-when-downgrade';
+      frame.src = toEmbedURL(url);
+      content.appendChild(frame);
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      btnClose?.focus();
+    }
+    function closeModal(){
+      modal.hidden = true;
+      content.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', (e)=>{
+      const card = e.target.closest('.project-card');
+      if(!card) return;
+      const url = card.getAttribute('data-url');
+      if(!url) return;
+      const title = card.getAttribute('data-title') || card.querySelector('h3')?.textContent || 'Project';
+      openModal(title, url);
+    });
+
+    btnClose?.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e)=>{ if(!modal.hidden && e.key === 'Escape') closeModal(); });
+  })();
+  </script>
+  <script>
+    // Learning section logic (tabs + accessibility)
+    (function(){
+      const wrap = document.querySelector('.about-learning');
+      if(!wrap) return;
+      const tabMain = wrap.querySelector('#tabMain');
+      const tabSide = wrap.querySelector('#tabSide');
+      const panelMain = wrap.querySelector('#learnMain');
+      const panelSide = wrap.querySelector('#learnSide');
+      const glider = wrap.querySelector('.seg-glider');
+
+      function activate(which){
+        const isMain = which === 'main';
+        // buttons
+        tabMain.classList.toggle('active', isMain);
+        tabSide.classList.toggle('active', !isMain);
+        tabMain.setAttribute('aria-selected', isMain ? 'true' : 'false');
+        tabSide.setAttribute('aria-selected', !isMain ? 'true' : 'false');
+        // panels
+        panelMain.classList.toggle('active', isMain);
+        panelSide.classList.toggle('active', !isMain);
+        panelMain.hidden = !isMain;
+        panelSide.hidden = isMain;
+        // glider position
+        glider.style.transform = isMain ? 'translateX(0)' : 'translateX(100%)';
+      }
+
+      tabMain.addEventListener('click', ()=>activate('main'));
+      tabSide.addEventListener('click', ()=>activate('side'));
+      wrap.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowRight') { activate('side'); tabSide.focus(); }
+        if(e.key === 'ArrowLeft')  { activate('main'); tabMain.focus(); }
+      });
+
+      // run once (ensure correct starting state)
+      activate('main');
+    })();
+  </script>
+  <script>
+  /* ===== Helper: normalize various URLs to embed src ===== */
+  function toEmbedURL(raw){
+    if(!raw) return null;
+    try{
+      const u = new URL(raw);
+
+      // YouTube
+      if(u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')){
+        let id = '';
+        if(u.hostname.includes('youtu.be')) id = u.pathname.slice(1);
+        else id = u.searchParams.get('v') || '';
+        return id ? `https://www.youtube.com/embed/${id}` : raw;
+      }
+
+      // Google Drive file
+      if(u.hostname.includes('drive.google.com')){
+        const m = u.pathname.match(/\/file\/d\/([^/]+)\//);
+        const id = m?.[1];
+        return id ? `https://drive.google.com/file/d/${id}/preview` : raw;
+      }
+
+      // Google Docs
+      if(u.hostname.includes('docs.google.com') && u.pathname.includes('/document/')){
+        return raw.includes('embedded=true') ? raw : raw.replace('/edit', '/edit') + (raw.includes('?') ? '&' : '?') + 'embedded=true';
+      }
+
+      // Google Slides
+      if(u.hostname.includes('docs.google.com') && u.pathname.includes('/presentation/')){
+        const id = u.pathname.split('/d/')[1]?.split('/')[0];
+        if(id) return `https://docs.google.com/presentation/d/${id}/embed?start=false&loop=false&delayms=3000`;
+        return raw;
+      }
+    }catch(e){ /* non-URL string */ }
+    return raw;
+  }
+
+  /* ===== Project View Controller ===== */
+  (function(){
+    const docEl = document.getElementById('projDoc');
+    const backBtn = document.getElementById('projBack');
+
+    function renderFromTemplate(tid, titleText){
+      const tpl = document.getElementById(tid);
+      if(!tpl){ docEl.innerHTML = `<p class="muted">Template not found: <b>${tid}</b></p>`; return; }
+      docEl.innerHTML = '';
+      // optional title injection (keep your own H1 in template if you want)
+      const titleBar = document.createElement('div');
+      titleBar.className = 'meta';
+      titleBar.textContent = titleText || 'Project';
+      titleBar.style.marginBottom = '6px';
+      docEl.appendChild(titleBar);
+
+      docEl.appendChild(tpl.content.cloneNode(true));
+    }
+
+    function renderFromURL(url, titleText){
+      docEl.innerHTML = `
+        <div class="meta">${titleText || 'Project'} • Embedded</div>
+        <div class="hero"><iframe src="${toEmbedURL(url)}" loading="lazy" allowfullscreen title="Embedded content"></iframe></div>
+        <p>If the embed doesn’t load, <a href="${url}" target="_blank" rel="noopener">open it in a new tab</a>.</p>
+      `;
+    }
+
+    // Card click → push selection into sessionStorage and go to #project-view
+    document.addEventListener('click', (e)=>{
+      const card = e.target.closest('.project-card');
+      if(!card) return;
+      const payload = {
+        title: card.getAttribute('data-title') || card.querySelector('h3')?.textContent || 'Project',
+        template: card.getAttribute('data-template') || '',
+        url: card.getAttribute('data-url') || ''
+      };
+      sessionStorage.setItem('__projSel', JSON.stringify(payload));
+      // navigate
+      location.hash = 'project-view';
+    });
+
+    // Keyboard accessibility (Enter/Space on card)
+    document.addEventListener('keydown', (e)=>{
+      if(!(e.key === 'Enter' || e.key === ' ')) return;
+      const card = e.target.closest('.project-card');
+      if(!card) return;
+      e.preventDefault();
+      card.click();
+    });
+
+    // When router shows #project-view, render selected payload
+    window.addEventListener('hashchange', tryRender);
+    document.addEventListener('DOMContentLoaded', tryRender);
+
+    function tryRender(){
+      if(location.hash.replace('#','') !== 'project-view') return;
+      const data = sessionStorage.getItem('__projSel');
+      if(!data){ docEl.innerHTML = '<p class="muted">No project selected. Go back to the Projects list.</p>'; return; }
+      const sel = JSON.parse(data);
+      if(sel.template) renderFromTemplate(sel.template, sel.title);
+      else if(sel.url) renderFromURL(sel.url, sel.title);
+      else docEl.innerHTML = '<p class="muted">This card has no content source yet.</p>';
+    }
+
+    // Back button
+    backBtn?.addEventListener('click', (e)=>{
+      // Let anchor change hash; also try history back if came from #project
+      e.preventDefault();
+      if(history.length > 1) history.back();
+      else location.hash = 'project';
+    });
+  })();
+  </script>
+
+</body>
+</html>
